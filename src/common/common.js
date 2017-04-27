@@ -1,3 +1,4 @@
+(function(a,b,c,d){var e=a(b);a.fn.lazyload=function(c){function i(){var b=0;f.each(function(){var c=a(this);if(h.skip_invisible&&!c.is(":visible"))return;if(!a.abovethetop(this,h)&&!a.leftofbegin(this,h))if(!a.belowthefold(this,h)&&!a.rightoffold(this,h))c.trigger("appear"),b=0;else if(++b>h.failure_limit)return!1})}var f=this,g,h={threshold:0,failure_limit:0,event:"scroll",effect:"show",container:b,data_attribute:"original",skip_invisible:!0,appear:null,load:null};return c&&(d!==c.failurelimit&&(c.failure_limit=c.failurelimit,delete c.failurelimit),d!==c.effectspeed&&(c.effect_speed=c.effectspeed,delete c.effectspeed),a.extend(h,c)),g=h.container===d||h.container===b?e:a(h.container),0===h.event.indexOf("scroll")&&g.bind(h.event,function(a){return i()}),this.each(function(){var b=this,c=a(b);b.loaded=!1,c.one("appear",function(){if(!this.loaded){if(h.appear){var d=f.length;h.appear.call(b,d,h)}a("<img />").bind("load",function(){c.hide().attr("src",c.data(h.data_attribute))[h.effect](h.effect_speed),b.loaded=!0;var d=a.grep(f,function(a){return!a.loaded});f=a(d);if(h.load){var e=f.length;h.load.call(b,e,h)}}).attr("src",c.data(h.data_attribute))}}),0!==h.event.indexOf("scroll")&&c.bind(h.event,function(a){b.loaded||c.trigger("appear")})}),e.bind("resize",function(a){i()}),/iphone|ipod|ipad.*os 5/gi.test(navigator.appVersion)&&e.bind("pageshow",function(b){b.originalEvent.persisted&&f.each(function(){a(this).trigger("appear")})}),a(b).load(function(){i()}),this},a.belowthefold=function(c,f){var g;return f.container===d||f.container===b?g=e.height()+e.scrollTop():g=a(f.container).offset().top+a(f.container).height(),g<=a(c).offset().top-f.threshold},a.rightoffold=function(c,f){var g;return f.container===d||f.container===b?g=e.width()+e.scrollLeft():g=a(f.container).offset().left+a(f.container).width(),g<=a(c).offset().left-f.threshold},a.abovethetop=function(c,f){var g;return f.container===d||f.container===b?g=e.scrollTop():g=a(f.container).offset().top,g>=a(c).offset().top+f.threshold+a(c).height()},a.leftofbegin=function(c,f){var g;return f.container===d||f.container===b?g=e.scrollLeft():g=a(f.container).offset().left,g>=a(c).offset().left+f.threshold+a(c).width()},a.inviewport=function(b,c){return!a.rightoffold(b,c)&&!a.leftofbegin(b,c)&&!a.belowthefold(b,c)&&!a.abovethetop(b,c)},a.extend(a.expr[":"],{"below-the-fold":function(b){return a.belowthefold(b,{threshold:0})},"above-the-top":function(b){return!a.belowthefold(b,{threshold:0})},"right-of-screen":function(b){return a.rightoffold(b,{threshold:0})},"left-of-screen":function(b){return!a.rightoffold(b,{threshold:0})},"in-viewport":function(b){return a.inviewport(b,{threshold:0})},"above-the-fold":function(b){return!a.belowthefold(b,{threshold:0})},"right-of-fold":function(b){return a.rightoffold(b,{threshold:0})},"left-of-fold":function(b){return!a.rightoffold(b,{threshold:0})}})})(jQuery,window,document)
 /**
  * Created by Publish Team on 2017-04-26.
  */
@@ -49,7 +50,7 @@
 		return stance;
 	};
 	/**
-	 * [ lazyloadImage bx 슬라이더용 lazyload 설정 ]
+	 * [ lazyload2 bx 슬라이더용 lazyload 설정 ]
 	 * @param {Object} settings
 	 * 					{String} originAttr       : 원래 이미지의 path 를 가지고 있는 속성명
 	 * 					{String} lazySelector     : lazy 가 적용 될 dom(img) 노드의 jQuery 선택자 문자열
@@ -57,11 +58,11 @@
 	 * 					{Function} onComplete     : lazy 적용후 실행 callback
 	 * @returns {Object} jQuery self
 	 */
-	$.fn.lazyloadImage = function (settings) {
+	$.fn.lazyload2 = function (settings) {
 		var options = $.extend(true, {
 			exposeAll: false,
-			originAttr: 'data-original',
-			lazySelector: '.lazy',
+			dataAttrName: 'data-original',
+			lazySelector: '.bx-lazy',
 			shouldRemoveAttr: 'width height',
 			onComplete: null
 		}, settings || {});
@@ -75,8 +76,8 @@
 			}
 			else { $lazyTarget = $this; }
 
-			path = $lazyTarget.attr(options.originAttr);
-			$lazyTarget.attr('src', path).removeAttr(options.originAttr,' ',options.shouldRemoveAttr);
+			path = $lazyTarget.attr(options.dataAttrName);
+			$lazyTarget.attr('src', path).removeAttr(options.dataAttrName,' ',options.shouldRemoveAttr);
 			if($.type(options.onComplete) === 'function') {
 				options.onComplete.call(this);
 			}
@@ -94,7 +95,6 @@
 			var $owner = $(this),
 				$sliderLi = $owner.find('li')
 			;
-
 			var c = {
 				init: function () {
 					$owner.attr('id', $.uuid());
@@ -141,10 +141,10 @@
 
 					if(dataLazy) {
 						$sliderLi.filter(function (i){
-							if(i <= 1) { $(this).lazyloadImage(); }
+							if(i <= 1) { $(this).lazyload2();}
 						})
 					}
-					else { $sliderLi.each(function () { $(this).lazyloadImage(); }) }
+					else { $sliderLi.each(function () { $(this).lazyload2(); }) }
 					$owner = $owner.bxSlider({
 						slideWidth: $sliderLi.width()
 						,slideMargin: _slideMargin
@@ -168,15 +168,10 @@
 							// 	'max-width': $win.width() + 'px',
 							// 	'margin': '1px auto'
 							// });
-							$owner.reloadSlider();
+							$owner.redrawSlider();
 						},
 						onSlideBefore: function ($slideElement, oldIdx, newIdx) {
-							if(this.loadComplete) return;
-							if($.inScreen($owner).justView) {
-								$sliderLi.lazyloadImage();
-								this.loadComplete = true;
-							}
-
+							$sliderLi.lazyload2();
 						}
 					});
 					$.sliders.push($owner);
@@ -188,120 +183,24 @@
 					c.slideStartByScrollView();
 				},
 				reloadSlider: function () {
-					$owner.reloadSlider()
+					$owner.reloadSlider();
 				},
 				redrawSlider: function () {
 					$owner.redrawSlider();
 				},
 				slideStartByScrollView: function () {
 					$win.on('scroll', function () {
-						if($.inScreen($owner).justView) {
-							$owner.startAuto();
-							$sliderLi.lazyloadImage({onComplete: function () {console.log('lazy complete')}});
-							c.loadComplete = true;
-						}
-						else {
-							$owner.stopAuto();
-						}
+						if($.inScreen($owner).justView) { $owner.startAuto(); }
+						else { $owner.stopAuto(); }
 					})
 				}
 			};
 			c.init();
+			$win.scroll(function () {
+				console.log('on')
+			})
 			$win.trigger('scroll');
 			$owner.data('slider', c);
 		})
 	}
-
-	$.fn.tab = function (settings) {
-		let options = $.extend(true, {
-			triggers: 'a',
-			triggerAttr: 'href',
-			contents: '.tab-content',
-			activeClassName: 'active',
-			onChange: null
-		}, settings || {});
-
-		return this.each(function () {
-			let $owner = $(this);
-
-			let c = {
-				init: function () {
-					let triggers = options.triggers,
-						triggerType = $.type(triggers)
-					;
-					if(triggerType === 'array' && triggers.length) triggers = triggers.join(',');
-
-					options.$triggers = $(triggers);
-					$owner.on('click', triggers, function (ev) {
-						$.preventActions(ev);
-						c.show($(this));
-					})
-				},
-				show: function ($t) {
-					options.$triggers.removeClass(options.activeClassName);
-					$t.addClass(options.activeClassName);
-
-					$(options.contents).hide().removeClass(options.activeClassName);
-					$($t.attr(options.triggerAttr)).show().addClass(options.activeClassName);
-
-					if($.type(options.onChange) === 'function' && options.onChange) {
-						options.onChange.call($owner, c);
-					}
-				},
-				destory: function () {
-					$owner.off('click').clearQueue().data('tab', null);
-					c = null;
-				}
-			};
-
-			c.init();
-			$owner.data('tab', c);
-		})
-	};
-	$.fn.tab = function (settings) {
-		var options = $.extend(true, {
-			triggers: 'a',
-			triggerAttr: 'href',
-			contents: '.tab-content',
-			activeClassName: 'active',
-			onChange: null
-		}, settings || {});
-
-		return this.each(function () {
-			var $owner = $(this);
-
-			var c = {
-				init: function () {
-					var triggers = options.triggers,
-						triggerType = $.type(triggers)
-					;
-					if(triggerType === 'array' && triggers.length) triggers = triggers.join(',');
-
-					options.$triggers = $(triggers);
-					$owner.on('click', triggers, function (ev) {
-						$.preventActions(ev);
-						c.show($(this));
-					})
-				},
-				show: function ($t) {
-					options.$triggers.removeClass(options.activeClassName);
-					$t.addClass(options.activeClassName);
-
-					$(options.contents).hide().removeClass(options.activeClassName);
-					$($t.attr(options.triggerAttr)).show().addClass(options.activeClassName);
-
-					if($.type(options.onChange) === 'function' && options.onChange) {
-						options.onChange.call($owner, c);
-					}
-				},
-				destory: function () {
-					$owner.off('click').clearQueue().data('tab', null);
-					c = null;
-				}
-			};
-
-			c.init();
-			$owner.data('tab', c);
-		})
-	};
 })(jQuery, window);
