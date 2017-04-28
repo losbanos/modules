@@ -46,9 +46,9 @@
 			crossAtTop: rect2.y1 < rect1.y1 && rect2.y1 < rect1.y2 && rect2.y2 > rect1.y1 && rect2.y1 < rect1.y2,
 			crossAtBottom: rect2.y1 > rect1.y1 && rect2.y1 < rect1.y2 && rect2.y2 > rect1.y1 && rect2.y2 > rect1.y2
 		};
-		stance['justView'] =  stance.insideViewport || stance.crossAtTop || stance.crossAtBottom;
-		return stance;
+		return stance.insideViewport || stance.crossAtTop || stance.crossAtBottom;
 	};
+
 	/**
 	 * [ lazyload2 bx 슬라이더용 lazyload 설정 ]
 	 * @param {Object} settings
@@ -79,10 +79,53 @@
 			path = $lazyTarget.attr(options.dataAttrName);
 			$lazyTarget.attr('src', path).removeAttr(options.dataAttrName,' ',options.shouldRemoveAttr);
 			if($.type(options.onComplete) === 'function') {
-				options.onComplete.call(this);
+				$lazyTarget.load(function() {
+					options.onComplete.call($this);
+				})
 			}
 		});
 	};
+	$.lazy = function ($elements) {
+		var $els = $($elements);
+
+		var c = {
+			$cur: '',
+			inProgress: false,
+			check: function () {
+				if(c.inProgress) return false;
+
+				$els.each(function () {
+					var $this = $(this);
+					if($.inScreen($this)) {
+						c.inProgress = true;
+						$this.lazyload2({onComplete: function () {
+							var $el = $($els.splice(0, 1));
+							$el.removeClass('lazy').removeAttr('data-original');
+							c.inProgress = false;
+							c.check();
+						}});
+						return false;
+					}
+				})
+			}
+		};
+		$win.scroll(function () {
+			c.check();
+		});
+	};
+	$.fn.lazyload3 = function (settings) {
+		var options = $.extend(true, {
+			minHeight: 500
+		}, settings || {});
+
+		return this.each(function () {
+			var $this = $(this).css('min-height', options.minHeight);
+			$this.lazyload().load(function () {
+				$this.removeAttr('style');
+			})
+		})
+	}
+
 
 	$.fn.setBxSlider = function (settings) {
 		$.sliders = $.sliders || [];
@@ -190,17 +233,17 @@
 				},
 				slideStartByScrollView: function () {
 					$win.on('scroll', function () {
-						if($.inScreen($owner).justView) { $owner.startAuto(); }
+						if($.inScreen($owner)) { $owner.startAuto(); }
 						else { $owner.stopAuto(); }
 					})
 				}
 			};
 			c.init();
-			$win.scroll(function () {
-				console.log('on')
-			})
 			$win.trigger('scroll');
 			$owner.data('slider', c);
 		})
+	};
+	$.fn.tab = function (settings) {
+
 	}
 })(jQuery, window);
