@@ -9,7 +9,7 @@
 	/**
 	 * [uuid - unique id 명 생성]
 	 * @param null
-	 * @return {String}
+	 * @return {String} 고유한 id 값을 반환한다.
 	 */
 	$.uuid = function () {
 		var lut = []; for (var i=0; i<256; ++i) { lut[i] = (i<16?'0':'')+(i).toString(16); }
@@ -27,8 +27,8 @@
 
 	/**
 	 * [ inScreen 뷰포트 영역캐치]
-	 * @param  {jQuery} $el        [위치 확인 대상 - 뷰포트 영역에 들어갔는지 여부.]
-	 * @return {Object} literal    [ {int} left, {int} top, {Boolean} insideViewport ]
+	 * @param  {jQuery}  $el           [위치 확인 대상 - 뷰포트 영역에 들어갔는지 여부를 확인하고 싶은 대상 객체.]
+	 * @return {Boolean} true/false    [ 대상 객체가 스크린에 보이는지 아닌지에 대한 여부 ]
 	 */
 	$.inScreen = function ($el) {
 		if(!$el.length) return;
@@ -85,6 +85,12 @@
 			}
 		});
 	};
+	/**
+	 * 순차적 이미지 로딩을 위한 lazy 전역함수
+	 * scrollTop 0 으부터 스크롤시 정상동작, 하단으로부터 스크롤 혹은 페이지 로드시 앵커태그로 임의 이동의 경우 정상적으로 동작하지 않음.
+	 * usage - $.lazy(selectors);
+	 * @param $elements
+	 */
 	$.lazy = function ($elements) {
 		var $els = $($elements);
 
@@ -113,13 +119,27 @@
 			c.check();
 		});
 	};
+	/**
+	 * [ lazyload3 ]
+	 * @desc	lazyload(http://appelsiini.net/projects/lazyload/) 가 기본적으로 대상 이미지에 height 를 선언해주어야 하는 부분에 대한 보완
+	 * 			min-height 를 임의로 선언함으로 대상 이미지가 스크린에 노출/로드 되는지에 대한 여부를 결정할수 있도록 설정.
+	 * 			해당 이미지가 로드된 이후에는 min-height 속성을 삭제함으로써 설정된 min-height보다 작은 이미지에 대한 대응.
+	 *
+	 * @param {Object} settings {
+	 * 						{int}       minHeight : 스크롤 포지션확정을 위한 이미지의 최소 가정 높이( 해당 페이지의 이미지 평균높이에 따라 임의로 설정가능)
+	 * 						{Boolean}	forceSize : min-height 를 무시하고 width, height 를 직접 대상에 입력할시 true 로 설정하면 min-height 값을 무시한다.
+	 * @returns {jQuery} self;
+	 */
 	$.fn.lazyload3 = function (settings) {
 		var options = $.extend(true, {
-			minHeight: 500
+			minHeight: 500,
+			forceSize: false
 		}, settings || {});
 
 		return this.each(function () {
-			var $this = $(this).css('min-height', options.minHeight);
+			var $this = $(this);
+			if(!forceSize) { $this.css('min-height', options.minHeight); }
+
 			$this.lazyload().load(function () {
 				$this.removeAttr('style');
 			})
