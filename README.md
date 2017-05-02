@@ -46,9 +46,8 @@ $(selector).lazyload3()
 ```js
 $('.lazy').lazyload3({minHeight: 500})
 ```
-일단 메서드 네임은 좀 거지같으니 이따가 바꿀께연.  
 
 ### Who do I talk to? ###
-
+일단 메서드 네임은 좀 거지같으니 이따가 바꿀께연.  
 * Repo owner or admin
 * Other community or team contact
