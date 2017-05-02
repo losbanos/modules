@@ -12,7 +12,7 @@ Common JS Libraries for Hackers Publish Team
 * 각 src 폴더는 각 기능 개발용 소스/폴더입니다.  
 * dist 폴더는 차후 src 와 동일한 폴더 구조를 가지게 될 예정이며 통합 js 파일도 동시에 제공할 예정입니다.  
 
-### Features ###  
+### Features ###
 * jQuery-floating : 제이쿼리 기반 플로팅배너 (추가예정)
 * jQuery-tab      : 제이쿼리 기반 탭 플러그인 (추가예정)  
 * SetBxSlider     : bx 슬라이더 업데이트 및 탭 연동 (업데이트 예정)

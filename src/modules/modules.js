@@ -138,11 +138,11 @@
 
 		return this.each(function () {
 			var $this = $(this);
-			if(!options.forceSize) { $this.css('min-height', options.minHeight); }
+			if(!options.forceSize) {$this.height(options.minHeight).css('display', 'block')}
 
 			$this.lazyload().load(function () {
-				$this.removeAttr('style');
-			})
+				$this.removeAttr('style data-original');
+			});
 		})
 	}
 
