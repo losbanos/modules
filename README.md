@@ -24,15 +24,15 @@ Common JS Libraries for Hackers Publish Team
    
 **추가되어야 할 파일**  
 ```html
-<script type="text/javascript" src="path/modules.js"></script>
+<script type="text/javascript" src="path/js/modules.js"></script>
 ```
 기존 img tag  
 ```html
-<img src="images/path.jpg" />
+<img src="images/filename.jpg" />
 ```
 변경
 ```html
-<img class="lazy" src="" data-original="images/path.jpg" />
+<img class="lazy" src="" data-original="images/filename.jpg" />
 ```
 **Javascript**  
 ```js
