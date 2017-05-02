@@ -20,9 +20,9 @@ Common JS Libraries for Hackers Publish Team
 * modules: 통합 js 파일
 
 ### Usages ###
- ** Html **  
+ **Html**  
    
-** 추가되어야 할 파일 **  
+**추가되어야 할 파일**  
 ```html
 <script type="text/javascript" src="path/modules.js"></script>
 ```
