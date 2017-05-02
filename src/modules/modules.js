@@ -138,7 +138,7 @@
 
 		return this.each(function () {
 			var $this = $(this);
-			if(!forceSize) { $this.css('min-height', options.minHeight); }
+			if(!options.forceSize) { $this.css('min-height', options.minHeight); }
 
 			$this.lazyload().load(function () {
 				$this.removeAttr('style');
