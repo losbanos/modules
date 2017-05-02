@@ -263,6 +263,10 @@
 			$owner.data('slider', c);
 		})
 	};
+	/**
+	 *
+	 * @param settings
+	 */
 	$.fn.tab = function (settings) {
 
 	}
