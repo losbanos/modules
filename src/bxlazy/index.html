@@ -5,13 +5,9 @@
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="http://www.hackers.ac/css/jquery.bxslider.css">
     <style>
-        .t_c{text-align:center;}
         .tc{text-align:center;}
 
-        *{
-            margin: 0;
-            padding: 0;}
-
+        *{ margin: 0; padding: 0;}
         /* tab_type1 */
         .tab_type1 > ul{overflow:hidden;margin:15px 0;}
         .tab_type1 > ul > li{float:left;width:50%;*width:49.999%;}
@@ -140,12 +136,6 @@
     <script type="text/javascript" src="../common/common.js"></script>
     <script type="text/javascript" src="../lazyload3/lazyload3.js"></script>
     <script type="text/javascript" src="./bxlazy.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-        	$('.lazy').lazyload3();
-            $('.bxslider').setBxSlider()
-        })
-    </script>
 </head>
 <body>
 
@@ -257,5 +247,11 @@
         </a>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.lazy').lazyload3();
+        $('.bxslider').setBxSlider()
+    })
+</script>
 </body>
 </html>

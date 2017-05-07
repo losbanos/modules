@@ -150,4 +150,4 @@
             $owner.data('slider', c);
         })
     };
-})(jQuery, window)
+})(jQuery, window);
