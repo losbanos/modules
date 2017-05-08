@@ -108,9 +108,15 @@
                     c.showImage();
 
                 },
-                reloadSlider: function () {
-                    $owner.reloadSlider();
-                },
+				reloadSlider: function () {
+					if(!c.initialize) {
+						c.init();
+					}
+					else {
+						$owner.reloadSlider()
+
+					}
+				},
                 redrawSlider: function () {
                     $owner.redrawSlider();
                 },
