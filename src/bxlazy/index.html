@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BxSlider Lazy</title>
+    <!-- bxslidercss -->
+    <link rel="stylesheet" type="text/css" href="http://www.hackers.ac/css/jquery.bxslider.css">
+    <style rel="stylesheet" type="text/css">
+        *{
+            margin: 0;
+            padding: 0;}
+        img{
+            border: 0;}
+        .wrap{width:100%;}
+        .cont-row{
+        }
+        .row-in{
+            position: relative;
+            width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .con0{background-color:#000;}
+        .con2{background:url(http://image.hackers.ac/images/event/2017/0325j/vod/vod_con1_bg.jpg) no-repeat center 0; background-color:#3b0004;}
+        .con5{background:url(http://image.hackers.ac/images/event/2017/0325j/con5_bg.jpg) repeat-x 0 0;}
+
+        /* 슬라이드 */
+        .slide_e_inner_box{width:1000px; margin:0 auto;}
+        .slide_con_wrap{border:2px solid #e0e0e0; background:url(http://image.hackers.ac/images/event/2017/0325j/vod/vod_t01.jpg) no-repeat center 0; height:784px;  position:relative;}
+        .slide_con_wrap .slide_con {overflow:hidden !important; width:742px; height:422px; position:absolute; bottom:-5px; left:50%; margin-left:-450px;}
+        .slide_con_wrap .slide_con .bxslider ul{overflow:hidden;}
+        .slide_con_wrap .slide_con .bxslider li{text-align:center;}
+        .slide_con_wrap .slide_con .bx-wrapper .bx-controls-direction a{background:url('http://image.hackers.ac/images/event/2016/star_new/bx_btn.png') no-repeat 0 0;width:26px;height:44px;}
+        .slide_con_wrap .slide_con .bx-wrapper .bx-controls-direction .bx-next{background-position:-26px 0;}
+
+        .slide_con_wrap2{border:2px solid #e0e0e0; background:url(http://image.hackers.ac/images/event/2017/0325j/vod/vod_t02.jpg) no-repeat center 0; height:900px;  position:relative;}
+        .slide_con_wrap2 .slide_con{overflow:hidden !important; width:742px; height:422px; position:absolute; bottom:70px; right:50%; margin-right:-450px;}
+        .slide_con_wrap2 .slide_con .bxslider ul{overflow:hidden;}
+        .slide_con_wrap2 .slide_con .bxslider li{text-align:center;}
+        .slide_con_wrap2 .slide_con .bx-wrapper .bx-controls-direction a{background:url('http://image.hackers.ac/images/event/2016/star_new/bx_btn.png') no-repeat 0 0;width:26px;height:44px;}
+        .slide_con_wrap2 .slide_con .bx-wrapper .bx-controls-direction .bx-next{background-position:-26px 0;}
+
+        .btn_wrap{position:relative; width:1000px; margin:0 auto;}
+        .btn_con{position:absolute; top:291px; right:64px;}
+        .btn_con2{position:absolute; top:309px; left:33px;}
+
+        /* 적중슬라이드 */
+        .j_con_top{background:url(http://image.hackers.ac/images/event/2017/0325j/vod/j_con1_bg.jpg) repeat 0 0;}
+        .j_con_center{background-color:#2e2e2e;}
+        .j_con_center .play_btn{position:absolute; top:204px; left:76px;}
+        .j_con_center .j_inner_wrap{width:794px; margin:0 auto;}
+        .close_top_btn{position: absolute;top:-41px ;right:-49px; display: block; width: 79px; height: 28px; background:url('<?=$hackers_image_domain;?>/images/event/2016/1126j/btn_close_vod.jpg') no-repeat left top; text-indent: -9999px;}
+        /* 적중슬라이드 */
+        .j_con_wrap{overflow:hidden;}
+        .j_con_wrap .j_slide {overflow:hidden;height:252px;}
+        .j_con_wrap .j_slide .bx-viewport{}
+        .j_con_wrap .j_slide .bxslider li{text-align:center;}
+        .j_con_wrap .j_slide .bx-wrapper .bx-controls-direction a{background:url('http://image.hackers.ac/images/event/2016/star_new/bx_btn.png') no-repeat 0 0;width:26px;height:44px;}
+        .j_con_wrap .j_slide .bx-wrapper .bx-controls-direction .bx-next{background-position:-26px 0;}
+        .j_slide .bx-wrapper .bx-pager.bx-default-pager a{background:url('http://image.hackers.ac/images/event/2016/1211/j_pager_btn.png') no-repeat 0 0; width:12px; height:12px;}
+        .bx-wrapper .bx-pager.bx-default-pager a:hover,
+        .bx-wrapper .bx-pager.bx-default-pager a.active {background-position:0 bottom !important;}
+        .bx-wrapper .bx-pager, .bx-wrapper .bx-controls-auto{bottom:-20px;}
+        /* //적중슬라이드 */
+
+        .vod_con3{background-color:#3f3f3f;}
+        .vod_con3_inner{width:732px; margin:0 auto; padding-bottom:30px;}
+        .vod_con3 ul{overflow:hidden;}
+        .vod_con3 ul li{float:left; margin-left:20px;}
+        .vod_con3 ul li:first-child{margin:0;}
+        .vod_con3_2{background:url(http://image.hackers.ac/images/event/2017/0325j/vod/vod_con2_bg.jpg) no-repeat center 0;}
+        .vod_con4{background-color:#3f3f3f;}
+        .vod_con5{background-color:#480007;}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="con0 cont-row">
+            <div class="row-in">
+                <img src="http://image.hackers.ac/images/event/2017/0325j/con1.jpg" alt="" />
+            </div>
+        </div>
+        <!-- 적중레이어추가 -->
+        <div class="j_con_wrap j_con_top on">
+            <div class="cont-row">
+                <div class="row-in">
+                    <a href="#;" class="j_con_btn">
+                        <img src="http://image.hackers.ac/images/event/2017/0325j/vod/j_con1.jpg" alt="" />
+                    </a>
+                </div>
+            </div>
+            <div class="cont-row j_con_center">
+                <div class="row-in">
+                    <div class="e_inner_box pos-r pb20">
+                        <!-- <button type="button" class="close_top_btn">닫기</button> -->
+                        <div class="movie_box">
+                            <div class="play_btn vod" id="vod1">
+                                <a href="javascript:showmovie(1)">
+                                    <img src="http://image.hackers.ac/images/event/2017/0121j/j_play_btn.jpg" alt="" />
+                                </a>
+                            </div>
+                        </div>
+                        <img src="http://image.hackers.ac/images/event/2017/0325j/vod/j_con2.jpg" alt="" usemap="#j_center" border="0" />
+                        <map name="j_center">
+                            <area shape="rect" coords="481,322,906,418" href="#go_list" alt="조기마감주의 ">
+                        </map>
+                        <div class="vod_slide_wrap">
+                            <div class="tc pt30 pb30 j_slide_con">
+                                <div class="j_inner_wrap">
+                                    <div class="j_slide bxslider-default" >
+                                        <ul class="bxslider" data-mode="horizontal" data-auto="true" data-controls="true">
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_01.jpg"></li>
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_02.jpg"></li>
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_03.jpg"></li>
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_04.jpg"></li>
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_05.jpg"></li>
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_06.jpg"></li>
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_07.jpg"></li>
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_08.jpg"></li>
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_09.jpg"></li>
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_10.jpg"></li>
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_11.jpg"></li>
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_12.jpg"></li>
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_13.jpg"></li>
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_14.jpg"></li>
+                                            <li><img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0508/img_07_15.jpg"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    <!-- //적중레이어추가 -->
+    <div class="con2 cont-row">
+        <div class="row-in">
+            <img class="lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0325j/vod/vod_con1.jpg" alt="" usemap="#con2" border="0" />
+            <map name="con2">
+                <area shape="rect" coords="3,568,991,668" href="http://www.hackers.ac/site/?st=lecture&idx=201&loc=2" target="_blank">
+            </map>
+
+        </div>
+    </div>
+    <div class="vod_con3 cont-row">
+        <div class="row-in">
+            <img class="lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0325j/vod/vod_list_top.jpg" alt="">
+        <div class="vod_con3_inner">
+            <ul>
+                <li>
+                    <div id="vod2" class="vod">
+                        <a href="javascript:showmovie(2)">
+                            <img class="lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0325j/vod/vod_list01.jpg" alt="">
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div id="vod3" class="vod">
+                        <a href="javascript:showmovie(3)">
+                            <img class="lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0325j/vod/vod_list02.jpg" alt="리스티이미지">
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="vod_con3_2">
+            <img class="lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0325j/vod/vod_con2.jpg" alt="하단이미지">
+        </div></div>
+    </div>
+
+    <div class="con5 cont-row">
+        <div class="row-in"><img class="lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0325j/con5.jpg" alt="" /></div>
+    </div>
+    <div class="slide_con_wrap cont-row">
+        <div class="btn_wrap">
+            <div class="btn_con">
+                <a href="http://www.hackers.ac/contents/?m=teacher_info&v=toeic&uid=40&iframe=" target="_blank">
+                    <img class="lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0214/con_btn.jpg" alt="" />
+                </a>
+            </div>
+        </div>
+        <div class="slide_e_inner_box">
+            <div class="slide_con bxslider-default" >
+                <ul class="bxslider" data-mode="horizontal" data-auto="true" data-controls="true" data-pager="true">
+                    <li>
+                        <img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0325j/lsg_slide01.jpg" alt="" />
+                    </li>
+                    <li>
+                        <img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0325j/lsg_slide02.jpg" alt="" />
+                    </li>
+                    <li>
+                        <img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0325j/lsg_slide03.jpg" alt="" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide_con_wrap2 cont-row">
+        <div class="btn_wrap">
+            <div class="btn_con2">
+                <a href="http://www.hackers.ac/contents/?m=teacher_info&v=toeic&uid=165&iframe=" target="_blank">
+                    <img class="lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0214/con_btn.jpg" alt="" />
+                </a>
+            </div>
+        </div>
+        <div class="slide_e_inner_box">
+            <div class="slide_con bxslider-default" >
+                <ul class="bxslider" data-mode="horizontal" data-auto="true" data-controls="true" data-pager="true">
+                    <li>
+                        <img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0325j/kjy_slide01.jpg" alt="" />
+                    </li>
+                    <li>
+                        <img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0325j/kjy_slide02.jpg" alt="" />
+                    </li>
+                    <li>
+                        <img class="bx-lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0325j/kjy_slide03.jpg" alt="" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="vod_con4 cont-row">
+        <div class="row-in"><img class="lazy" src="" data-original="http://image.hackers.ac/images/event/2017/0325j/vod/vod_con3.jpg" alt=""></div>
+    </div>
+    <script type="text/javascript" src="http://www.hackers.ac/contents/_core/js/jquery.min.js?nFlag=20170509"></script>
+    <script type="text/javascript" src="http://www.hackers.ac/js/jquery.bxslider.min.js"></script>
+    <script type="text/javascript" src="../common/common.js"></script>
+    <script type="text/javascript" src="../lazyload3/lazyload3.js"></script>
+    <script type="text/javascript" src="bxlazy.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.lazy').lazyload3();
+            $('.bxslider').setBxSlider();
+		})
+    </script>
+</body>
+</html>
