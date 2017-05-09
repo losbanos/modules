@@ -8,44 +8,21 @@ Common JS Libraries for Hackers Publish Team
 
 ### Structure ###
 * `src/`  : 개발용 폴더
-* `dist/*`: 배포용.
+* `dist/`: 배포용.
 * 각 src 폴더는 각 기능 개발용 소스/폴더입니다.  
 * dist 폴더는 차후 src 와 동일한 폴더 구조를 가지게 될 예정이며 통합 js 파일도 동시에 제공할 예정입니다.  
 
 ### Features ###
-* jQuery-floating : 제이쿼리 기반 플로팅배너 (추가예정)
-* jQuery-tab      : 제이쿼리 기반 탭 플러그인 (추가예정)  
-* SetBxSlider     : bx 슬라이더 업데이트 및 탭 연동 (업데이트 예정)
-* lazyload : 스크률 및 뷰포트 인지에 따른 이미지 순차로드. 
-* modules: 통합 js 파일
+**Dev**  
+* [Common](http://222.122.229.21/guide/modules/tree/master/src/common) :    전역,공통 메서드
+* [jQuery-floating](http://222.122.229.21/guide/modules/tree/master/src/jquery-floating) : 제이쿼리 기반 플로팅배너 (추가예정)
+* [jQuery-Tab](http://222.122.229.21/guide/modules/tree/master/src/tab)    : 제이쿼리 기반 탭 플러그인 (추가예정)  
+* [SetBxSlider](http://222.122.229.21/guide/modules/tree/master/src/bxlazy)     : bx 슬라이더 업데이트 및 탭 연동
+* [lazyload3](http://222.122.229.21/guide/modules/tree/master/src/lazyload3) : 스크률 및 뷰포트 인지에 따른 이미지 순차로드. 
+* [modules](http://222.122.229.21/guide/modules/blob/master/dist/modules.js): 통합 js 파일
 
-### Usages ###
- **Html**  
-   
-**추가되어야 할 파일**  
-```html
-<script type="text/javascript" src="path/js/modules.js"></script>
-```
-기존 img tag  
-```html
-<img src="images/filename.jpg" />
-```
-변경
-```html
-<img class="lazy" src="" data-original="images/filename.jpg" />
-```
-**Javascript**  
-```js
-$(selector).lazyload3()
-```
-**Options**  
-`minHeight` :   
-* 이미지 최소 높이 설정(px), lazyload 의 특성상 이미지의 기본 높이가 필요합니다.  
-* 기본설정 : 500px
-    
-```js
-$('.lazy').lazyload3({minHeight: 500})
-```
+### Installation ###
+[Download Node](https://nodejs.org/ko/)  
 
 ### Who do I talk to? ###
 일단 메서드 네임은 좀 거지같으니 이따가 바꿀께연.  
