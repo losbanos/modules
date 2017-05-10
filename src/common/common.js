@@ -49,21 +49,7 @@
 		};
 		return stance.insideViewport || stance.crossAtTop || stance.crossAtBottom;
 	};
-    $.fn.lazyload3 = function (settings) {
-        var options = $.extend(true, {
-            minHeight: $win.height(),
-            forceSize: false
-        }, settings || {});
 
-        return this.each(function () {
-            var $this = $(this);
-            if(!options.forceSize) {$this.height(options.minHeight).css('display', 'block')}
-
-            $this.lazyload().load(function () {
-                $this.removeAttr('style data-original');
-            });
-        })
-    }
 	/**
 	 * [ loadLazyed bx 슬라이더용 lazyload 설정 ]
 	 * @param {Object} settings
