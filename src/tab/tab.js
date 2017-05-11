@@ -13,7 +13,7 @@
 			activeClassName: 'on',
 			offOldTab: true,
 			sliders: ['.bxslider'],
-			videos: '',
+			players: '',
 			onChange: null,
 			onRollOver: null,
 			onRollOut: null,
@@ -24,7 +24,7 @@
 			var $owner = $(this);
 
 			var c = {
-				$triggers: '', $contents: '', $sliders: '', $cur: '',
+				$triggers: '', $contents: '', $sliders: '', $cur: '', $jwplayers: [],
 				init: function () {
 					var triggers = options.triggers,
 						contents = options.contents,
@@ -44,6 +44,8 @@
 					options.contents = contents;
 					this.$contents = $(contents.slice(0, -1));
 
+					this.setPlayers();
+
 					$owner.on('click', triggers, function (ev) {
 						$.preventActions(ev);
 						c.show($(this));
@@ -54,8 +56,19 @@
 					});
 
 					this.setDefault(options.default);
+
 					$owner.trigger('init');
 					if(c.checkCallBack(options.onInit)) options.onInit.call($owner,c);
+				},
+				setPlayers: function () {
+					$.waitJwplayer(function () {
+						if(options.players && options.players.length) {
+							$.each(options.players, function (i, n) {
+								c.$jwplayers = c.$jwplayers.length ? c.$jwplayers : [];
+								c.$jwplayers[i] = $(n);
+							})
+						}
+					});
 				},
 				show: function ($tabTit) {
 					this.$triggers.removeClass(options.activeClassName);
@@ -66,12 +79,27 @@
 
 					if(options.sliders.length) this.reloadSlider(this.$cur);
 
+					$.waitJwplayer(function () {
+						if(options.players && options.players.length) {
+							$.each(options.players, function (i, n) {
+								jwplayer(options.players[i].slice(1)).pause(true);
+							});
+							$.each(options.players, function (i, n) {
+								if(c.$cur.find(n).length) {
+									jwplayer(n.slice(1)).play(true);
+								}
+							});
+						}
+					});
+
 					$owner.trigger('onChange');
 					$win.trigger('scroll');
 					if(c.checkCallBack(options.onChange)) options.onChange.call(this.$cur,c);
 				},
 				setDefault: function (num) {
-					this.$triggers.eq(num-1).trigger('click');
+					if(num) {
+						this.$triggers.eq(num-1).trigger('click');
+					}
 				},
 				reloadSlider: function ($cur) {
 					var $sliders = $cur.find(options.sliders.join(','));
@@ -81,9 +109,6 @@
 							slider.reloadSlider();
 						}
 					})
-				},
-				replayVideo: function () {
-
 				},
 				destory: function () {
 					$owner.off('click').clearQueue().data('tab', null);

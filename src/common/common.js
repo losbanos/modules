@@ -51,6 +51,24 @@
 	};
 
 	/**
+	 * preventActions
+	 * @param {Dom Events} ev
+	 * @description		이벤트 기본 behavior 차단 함수
+	 * @return 			null
+	 */
+	$.preventActions = function (ev) {
+		ev = ev || window.event;
+		if (ev.stopPropagation && ev.preventDefault) {
+			ev.stopPropagation();
+			ev.preventDefault();
+		}
+		else {
+			ev.cancelBubble = true;
+			ev.returnValue = false;
+		}
+	};
+
+	/**
 	 * [ loadLazyed bx 슬라이더용 lazyload 설정 ]
 	 * @param {Object} settings
 	 * 					{String} originAttr       : 원래 이미지의 path 를 가지고 있는 속성명
@@ -88,4 +106,25 @@
 			}
 		});
 	};
+
+	$.waitJwplayer = function (callback) {
+		var findJwplayer = function() {
+			var d = $.Deferred();
+			setTimeout( function () {
+				if(jwplayer) {
+					d.resolve('get jwplayer');
+				}
+				else {
+					findJwplayer();
+					d.fail();
+				}
+			}, 200);
+			return d;
+		};
+		findJwplayer().done( function () {
+			if(callback) callback();
+		}).fail( function () {
+			console.warn('Not Find Jwplayer.js');
+		})
+	}
 })(jQuery, window);
