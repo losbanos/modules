@@ -10,7 +10,7 @@
 			triggers: 'a', triggerAttr: 'href',
 			contents: '',
 			activeClassName: 'on',
-			offOldTab: true,
+			oldTabPrefix: 'js-tab-type',
 			sliders: ['.bxslider'],
 			players: '',
 			onChange: null,
@@ -30,15 +30,12 @@
 						this.setContents(options.contents)
 					).done(c.setActiveClassTarget(options.activeClassTarget));
 
-					if(options.players.length) this.setPlayers();
+					this.setPlayers();
+					this.disableOldTab();
 
 					$owner.on('click', options.triggers, function (ev) {
 						$.preventActions(ev);
 						c.show($(this));
-					});
-					$win.on('old-tab', function (ev, type) {
-						var oldTab = $("ul[class*='"+type+"']");
-						oldTab.find('a').off('click');
 					});
 
 					this.setDefault(options.default);
@@ -79,15 +76,33 @@
 					this.$activeClassTarget = $owner.find(activeClassTarget);
 
 				},
-				setPlayers: function () {
-					$.waitJwplayer(function () {
-						if(options.players && options.players.length) {
-							$.each(options.players, function (i, n) {
-								c.$jwplayers = c.$jwplayers.length ? c.$jwplayers : [];
-								c.$jwplayers[i] = $(n);
-							})
+				disableOldTab: function () {
+					var prefix = options.oldTabPrefix;
+					if(prefix && prefix.length) {
+						var ot = $('ul[class*="'+prefix+'"]');
+						if(ot.length) {
+							console.log('disabled old tab')
+							ot.find('a').off('click');
+						}
+					}
+					$win.on('old-tab', function () {
+						var ot = $("ul[class*='"+prefix+"']");
+						if(ot.length) {
+							ot.find('a').off('click');
 						}
 					});
+				},
+				setPlayers: function () {
+					if(options.players.length) {
+						$.waitJwplayer(function () {
+							if(options.players && options.players.length) {
+								$.each(options.players, function (i, n) {
+									c.$jwplayers = c.$jwplayers.length ? c.$jwplayers : [];
+									c.$jwplayers[i] = $(n);
+								})
+							}
+						});
+					}
 				},
 				show: function ($tabTit) {
 					this.$triggers.removeClass(options.activeClassName);
