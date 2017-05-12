@@ -1,5 +1,5 @@
 /**
- * Created by kth on 2017-04-26.
+ * Created by Hackers Publish Team on 2017-04-26.
  */
 ;(function ($, win) {
 	'use strict';
@@ -135,12 +135,19 @@
 					else { $sliderLi.each(function () {$(this).loadLazyed(); }) }
 
 					$owner.find('.bx-clone').loadLazyed();
+				},
+				reloadSlider: function () {
+					if(!c.initialized) {
+						c.init();
+					}
+					else {
+						$owner.reloadSlider()
+					}
 				}
 			};
-
 			$win.on('scroll', c.onScroll);
+			$owner.data('slider', c);
 			$win.trigger('scroll');
-			$owner.data('slider', $owner);
 		})
 	};
 })(jQuery, window);

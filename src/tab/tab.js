@@ -81,7 +81,6 @@
 					if(prefix && prefix.length) {
 						var ot = $('ul[class*="'+prefix+'"]');
 						if(ot.length) {
-							console.log('disabled old tab')
 							ot.find('a').off('click');
 						}
 					}
@@ -117,6 +116,7 @@
 
 					if(options.sliders.length) this.reloadSlider(this.$cur);
 
+
 					if(options.players.length) {
 						$.waitJwplayer(function () {
 							if(options.players && options.players.length) {
@@ -148,7 +148,7 @@
 						if(slider.reloadSlider){
 							slider.reloadSlider();
 						}
-					})
+					});
 				},
 				destory: function () {
 					$owner.off('click').clearQueue().data('tab', null);
