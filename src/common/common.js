@@ -111,7 +111,7 @@
 		var findJwplayer = function() {
 			var d = $.Deferred();
 			setTimeout( function () {
-				if(jwplayer) {
+				if(window.jwplayer!== void 0) {
 					d.resolve('get jwplayer');
 				}
 				else {

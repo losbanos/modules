@@ -7,8 +7,7 @@
 	$.fn.tab = function (settings) {
 		var options = $.extend(true, {
 			default: 1,
-			triggers: 'a',
-			triggerAttr: 'href',
+			triggers: 'a', triggerAttr: 'href',
 			contents: '',
 			activeClassName: 'on',
 			offOldTab: true,
@@ -24,29 +23,16 @@
 			var $owner = $(this);
 
 			var c = {
-				$triggers: '', $contents: '', $sliders: '', $cur: '', $jwplayers: [],
+				$triggers: '', $contents: '', $sliders: '', $cur: '', $jwplayers: [], $activeClassTarget: '',
 				init: function () {
-					var triggers = options.triggers,
-						contents = options.contents,
-						triggerType = $.type(triggers)
-					;
-					if(triggerType === 'array' && triggers.length) triggers = triggers.join(',');
+					$.when(
+						this.setTriggers(options.triggers),
+						this.setContents(options.contents)
+					).done(c.setActiveClassTarget(options.activeClassTarget));
 
-					options.triggers = triggers;
-					this.$triggers = $owner.find(triggers);
+					if(options.players.length) this.setPlayers();
 
-					if($.type(contents) === 'array' && contents.length) contents = contents.join(',');
-					else {
-						this.$triggers.each(function () {
-							contents += $(this).attr(options.triggerAttr)+',';
-						})
-					}
-					options.contents = contents;
-					this.$contents = $(contents.slice(0, -1));
-
-					this.setPlayers();
-
-					$owner.on('click', triggers, function (ev) {
+					$owner.on('click', options.triggers, function (ev) {
 						$.preventActions(ev);
 						c.show($(this));
 					});
@@ -59,6 +45,39 @@
 
 					$owner.trigger('init');
 					if(c.checkCallBack(options.onInit)) options.onInit.call($owner,c);
+				},
+				setTriggers: function (triggers) {
+					var triggerType = $.type(triggers)
+					;
+					if(triggerType === 'array' && triggers.length) triggers = triggers.join(',');
+
+					options.triggers = triggers;
+					this.$triggers = $owner.find(triggers);
+
+					return options.triggers;
+				},
+				setContents: function (contents) {
+					if($.type(contents) === 'array' && contents.length) contents = contents.join(',');
+					else {
+						this.$triggers.each(function () {
+							var $this = $(this);
+							if(!$this.is('a')) {
+								$this = $this.find('a');
+							}
+							contents += $this.attr(options.triggerAttr)+',';
+						})
+					}
+					options.contents = contents;
+					this.$contents = $(contents.slice(0, -1));
+
+					return options.contents;
+				},
+				setActiveClassTarget: function (activeClassTarget) {
+					if($.type(activeClassTarget) === 'array' && activeClassTarget.length) activeClassTarget = activeClassTarget.join(',');
+					else activeClassTarget = options.triggers;
+
+					this.$activeClassTarget = $owner.find(activeClassTarget);
+
 				},
 				setPlayers: function () {
 					$.waitJwplayer(function () {
@@ -75,22 +94,28 @@
 					$tabTit.addClass(options.activeClassName);
 
 					this.$contents.hide().removeClass(options.activeClassName);
+
+					if(!$tabTit.is('a')) {
+						$tabTit = $tabTit.find('a');
+					}
 					this.$cur = $($tabTit.attr(options.triggerAttr)).show().addClass(options.activeClassName);
 
 					if(options.sliders.length) this.reloadSlider(this.$cur);
 
-					$.waitJwplayer(function () {
-						if(options.players && options.players.length) {
-							$.each(options.players, function (i, n) {
-								jwplayer(options.players[i].slice(1)).pause(true);
-							});
-							$.each(options.players, function (i, n) {
-								if(c.$cur.find(n).length) {
-									jwplayer(n.slice(1)).play(true);
-								}
-							});
-						}
-					});
+					if(options.players.length) {
+						$.waitJwplayer(function () {
+							if(options.players && options.players.length) {
+								$.each(options.players, function (i, n) {
+									jwplayer(options.players[i].slice(1)).pause(true);
+								});
+								$.each(options.players, function (i, n) {
+									if(c.$cur.find(n).length) {
+										jwplayer(n.slice(1)).play(true);
+									}
+								});
+							}
+						});
+					}
 
 					$owner.trigger('onChange');
 					$win.trigger('scroll');
