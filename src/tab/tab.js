@@ -58,9 +58,9 @@
 					else {
 						this.$triggers.each(function () {
 							var $this = $(this);
-							if(!$this.is('a')) {
-								$this = $this.find('a');
-							}
+							// if(!$this.is('a')) {
+							// 	$this = $this.find('a');
+							// }
 							contents += $this.attr(options.triggerAttr)+',';
 						})
 					}
@@ -109,9 +109,9 @@
 
 					this.$contents.hide().removeClass(options.activeClassName);
 
-					if(!$tabTit.is('a')) {
-						$tabTit = $tabTit.find('a');
-					}
+					// if(!$tabTit.is('a')) {
+					// 	$tabTit = $tabTit.find('a');
+					// }
 					this.$cur = $($tabTit.attr(options.triggerAttr)).show().addClass(options.activeClassName);
 
 					if(options.sliders.length) this.reloadSlider(this.$cur);

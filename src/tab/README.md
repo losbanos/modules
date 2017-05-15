@@ -59,21 +59,17 @@ $('#tab_buttons').tab({triggers: 'li'});
 ```
 
 위의 경우 click event 는 a 가 아닌 li 요소에 바인딩되며 li 태그에 활성화 클래스(예: `on`)가 추가됩니다  
-trigger 를 변경한 경우라도 a 태그와 href 속성값은 필수적으로 필요합니다.  
+trigger 를 변경한 경우 탭컨텐츠의 아이디 값을 참조할 별도로 속성이 필요할 수 있습니다.  
+기본값 : `href`  
 a 태그와 href 속성을 다른 것으로 변경하고 싶은 경우  
 
-```js
-$(selector).tab({
-    triggers: selector,
-    triggerAttr: 'data-name'
-});
-```
+
 **Example**
 ```html
 <div id="tab_buttons">
     <li data-content="#content_1"><a href="#;">Tab 1</a></li>
-    <li data-content="#content_1"><a href="#;">Tab 2</a></li>
-    <li data-content="#content_1"><a href="#;">Tab 3</a></<li>
+    <li data-content="#content_2"><a href="#;">Tab 2</a></li>
+    <li data-content="#content_3"><a href="#;">Tab 3</a></<li>
 </div>
 
 <div id="content_1">Tab Content 1</div>
