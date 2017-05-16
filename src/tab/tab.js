@@ -11,7 +11,7 @@
 			contents: '',
 			activeClassName: 'on',
 			oldTabPrefix: 'js-tab-type',
-			sliders: ['.bxslider'],
+			sliders: ['.bxslider-lazy'],
 			players: '',
 			onChange: null,
 			onRollOver: null,
@@ -20,6 +20,7 @@
 		}, settings || {});
 
 		return this.each(function () {
+
 			var $owner = $(this);
 
 			var c = {
@@ -33,15 +34,14 @@
 					this.setPlayers();
 					this.disableOldTab();
 
-					$owner.on('click', options.triggers, function (ev) {
+					this.$triggers.on('click', function (ev) {
 						$.preventActions(ev);
 						c.show($(this));
 					});
 
-					this.setDefault(options.default);
-
 					$owner.trigger('init');
 					if(c.checkCallBack(options.onInit)) options.onInit.call($owner,c);
+
 				},
 				setTriggers: function (triggers) {
 					var triggerType = $.type(triggers)
@@ -56,17 +56,18 @@
 				setContents: function (contents) {
 					if($.type(contents) === 'array' && contents.length) contents = contents.join(',');
 					else {
-						this.$triggers.each(function () {
+						c.$triggers.each(function () {
 							var $this = $(this);
-							// if(!$this.is('a')) {
-							// 	$this = $this.find('a');
-							// }
-							contents += $this.attr(options.triggerAttr)+',';
+							if($this.attr(options.triggerAttr)) {
+								contents += $this.attr(options.triggerAttr)+',';
+							}
+							else {
+								contents += $this.find('a').attr(options.triggerAttr)+',';
+							}
 						})
 					}
 					options.contents = contents;
 					this.$contents = $(contents.slice(0, -1));
-
 					return options.contents;
 				},
 				setActiveClassTarget: function (activeClassTarget) {
@@ -108,14 +109,16 @@
 					$tabTit.addClass(options.activeClassName);
 
 					this.$contents.hide().removeClass(options.activeClassName);
-
-					// if(!$tabTit.is('a')) {
-					// 	$tabTit = $tabTit.find('a');
-					// }
-					this.$cur = $($tabTit.attr(options.triggerAttr)).show().addClass(options.activeClassName);
+					var cur;
+					if($tabTit.is('a')) {
+						cur = $tabTit.attr(options.triggerAttr);
+					}
+					else {
+						cur = $tabTit.find('a').attr(options.triggerAttr);
+					}
+					this.$cur = $(cur).show().addClass(options.activeClassName);
 
 					if(options.sliders.length) this.reloadSlider(this.$cur);
-
 
 					if(options.players.length) {
 						$.waitJwplayer(function () {
@@ -133,12 +136,16 @@
 					}
 
 					$owner.trigger('onChange');
-					$win.trigger('scroll');
-					if(c.checkCallBack(options.onChange)) options.onChange.call(this.$cur,c);
+					$(window).trigger('scroll');
+
+					if(c.checkCallBack(options.onChange)) options.onChange.call(c.$cur,c);
 				},
 				setDefault: function (num) {
 					if(num) {
 						this.$triggers.eq(num-1).trigger('click');
+					}
+					else {
+						this.$triggers.eq(options.default-1).trigger('click');
 					}
 				},
 				reloadSlider: function ($cur) {

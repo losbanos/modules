@@ -126,5 +126,16 @@
 		}).fail( function () {
 			console.warn('Not Find Jwplayer.js');
 		})
-	}
+	};
+
+	$.timer = function (duration) {
+		$.clock = setInterval( function () {
+			$win.trigger('scroll');
+		}, duration || 500);
+
+		$win.load(function () {
+			// clearInterval($.clock);
+		})
+	};
 })(jQuery, window);
+$.timer();
