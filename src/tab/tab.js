@@ -20,12 +20,16 @@
 		}, settings || {});
 
 		return this.each(function () {
-
 			var $owner = $(this);
-
 			var c = {
-				$triggers: '', $contents: '', $sliders: '', $cur: '', $jwplayers: [], $activeClassTarget: '',
 				init: function () {
+					this.$triggers =  '';
+					this.$contents =  null;
+					this.$sliders = '';
+					this.$cur =  '';
+					this.$jwplayers =  [];
+					this.$activeClassTarget = '';
+
 					$.when(
 						this.setTriggers(options.triggers),
 						this.setContents(options.contents)
@@ -34,7 +38,7 @@
 					this.setPlayers();
 					this.disableOldTab();
 
-					this.$triggers.on('click', function (ev) {
+					c.$triggers.on('click', function (ev) {
 						$.preventActions(ev);
 						c.show($(this));
 					});
@@ -56,7 +60,8 @@
 				setContents: function (contents) {
 					if($.type(contents) === 'array' && contents.length) contents = contents.join(',');
 					else {
-						c.$triggers.each(function () {
+						contents = '';
+						this.$triggers.each(function () {
 							var $this = $(this);
 							if($this.attr(options.triggerAttr)) {
 								contents += $this.attr(options.triggerAttr)+',';
@@ -165,9 +170,8 @@
 					return $.type(callback) === 'function' && callback;
 				}
 			};
-
 			c.init();
 			$owner.data('tab', c);
-		})
+		});
 	};
 })(jQuery, window);
