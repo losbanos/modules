@@ -22,14 +22,8 @@
 		return this.each(function () {
 			var $owner = $(this);
 			var c = {
+				$triggers: '', $contents: '',$sliders: '',$cur: '',$jwplayers: [],$activeClassTarget: '',
 				init: function () {
-					this.$triggers =  '';
-					this.$contents =  null;
-					this.$sliders = '';
-					this.$cur =  '';
-					this.$jwplayers =  [];
-					this.$activeClassTarget = '';
-
 					$.when(
 						this.setTriggers(options.triggers),
 						this.setContents(options.contents)
