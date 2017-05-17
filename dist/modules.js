@@ -458,7 +458,7 @@ $.emitScroll();
     var $win = $(win);
     $.fn.tab = function(settings) {
         var options = $.extend(true, {
-            default: 1,
+            base: 1,
             triggers: "a",
             triggerAttr: "href",
             contents: "",
@@ -589,7 +589,7 @@ $.emitScroll();
                     if (num) {
                         this.$triggers.eq(num - 1).trigger("click");
                     } else {
-                        this.$triggers.eq(options.default - 1).trigger("click");
+                        this.$triggers.eq(options.base - 1).trigger("click");
                     }
                 },
                 reloadSlider: function($cur) {
