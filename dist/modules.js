@@ -462,6 +462,7 @@ $.emitScroll();
             triggers: "a",
             triggerAttr: "href",
             contents: "",
+            eventType: "click",
             activeClassName: "on",
             oldTabPrefix: "js-tab-type",
             sliders: [ ".bxslider-lazy" ],
@@ -484,7 +485,7 @@ $.emitScroll();
                     $.when(this.setTriggers(options.triggers), this.setContents(options.contents)).done(c.setActiveClassTarget(options.activeClassTarget));
                     this.setPlayers();
                     this.disableOldTab();
-                    c.$triggers.on("click", function(ev) {
+                    $owner.on(options.eventType, options.triggers, function(ev) {
                         $.preventActions(ev);
                         c.show($(this));
                     });
@@ -511,7 +512,15 @@ $.emitScroll();
                         });
                     }
                     options.contents = contents;
-                    this.$contents = $(contents.slice(0, -1));
+                    try {
+                        this.$contents = $(contents.slice(0, -1));
+                    } catch (e) {
+                        var msg = e.message;
+                        if (msg.indexOf("Syntax error") > -1) {
+                            console.warn("탭 선택자 오타 혹은 오류입니다. \r\n 태그 및 trigger 확인 바랍니다. ", $owner);
+                        }
+                        return false;
+                    }
                     return options.contents;
                 },
                 setActiveClassTarget: function(activeClassTarget) {
