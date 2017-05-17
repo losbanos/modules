@@ -22,7 +22,7 @@
 		return this.each(function () {
 			var $owner = $(this);
 			var c = {
-				$triggers: '', $contents: '',$sliders: '',$cur: '',$jwplayers: [],$activeClassTarget: '',
+				$triggers: '', $contents: '', $sliders: '',$cur: '', $jwplayers: [], $activeClassTarget: '',
 				init: function () {
 					$.when(
 						this.setTriggers(options.triggers),
@@ -135,7 +135,8 @@
 					}
 
 					$owner.trigger('onChange');
-					$(window).trigger('scroll');
+					$win.trigger('scroll');
+					$.emitScroll();
 
 					if(c.checkCallBack(options.onChange)) options.onChange.call(c.$cur,c);
 				},

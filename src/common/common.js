@@ -128,14 +128,24 @@
 		})
 	};
 
-	$.timer = function (duration) {
-		$.clock = setInterval( function () {
-			$win.trigger('scroll');
-		}, duration || 500);
+	$win.on('scroll', function (ev, ready) {
+		if(ready < 0) {
+			$.stopEmitScroll();
+		}
+		else {
+			// console.warn('stop scroll emitt ready = ', ready)
+		}
+	});
+	$.emitScroll = function (duration) {
+		if($.clock) $.stopEmitScroll();
 
-		$win.load(function () {
-			// clearInterval($.clock);
-		})
+		var cnt = 30;
+		$.clock = setInterval( function () {
+			if(cnt > 0) { $win.trigger('scroll', [cnt])}
+			cnt--;
+		}, duration || 100);
 	};
+	$.stopEmitScroll = function () { clearInterval($.clock);$.clock=null;}
+
 })(jQuery, window);
-$.timer();
+$.emitScroll();

@@ -148,6 +148,7 @@
 			$win.on('scroll', c.onScroll);
 			$owner.data('slider', c);
 			$win.trigger('scroll');
+			$.emitScroll();
 		})
 	};
 })(jQuery, window);
