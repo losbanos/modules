@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server -d --config webpack.config.dev.js --colors",
     "build": "webpack --config webpack.config.build.js --colors",
-    "uglify-min": "uglifyjs src/common/common.js src/bxlazy/bxlazy.js src/lazyload3/lazyload3.js src/tab/tab.js -c -m -o dist/modules.min.js --source-map dist/modules.min.map",
+    "uglify-min": "uglifyjs src/common/common.js src/bxlazy/bxlazy.js src/lazyload3/lazyload3.js src/tab/tab.js -c -o dist/modules.min.js --source-map dist/modules.min.map",
     "uglify": "uglifyjs src/common/common.js src/bxlazy/bxlazy.js src/lazyload3/lazyload3.js src/tab/tab.js -b --comments all -o dist/modules.js"
   },
   "repository": {
