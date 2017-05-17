@@ -9,6 +9,7 @@
 			default: 1,
 			triggers: 'a', triggerAttr: 'href',
 			contents: '',
+			eventType: 'click',
 			activeClassName: 'on',
 			oldTabPrefix: 'js-tab-type',
 			sliders: ['.bxslider-lazy'],
@@ -32,7 +33,7 @@
 					this.setPlayers();
 					this.disableOldTab();
 
-					$owner.on('click', options.triggers, function (ev) {
+					$owner.on(options.eventType, options.triggers, function (ev) {
 						$.preventActions(ev);
 						c.show($(this));
 					});
