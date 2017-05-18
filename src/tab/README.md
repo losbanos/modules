@@ -81,7 +81,7 @@ $('#tab_buttons').tab({
 })
 </script>
 ```  
-### Options ### 
+### Options ###
  **default**  
 기본으로 활성화시킬 탭 인덱스 , 1부터 시작.  
 ```json
@@ -121,7 +121,8 @@ type: Array or String
 ex: ['#player_1', '#player_2']
 ```
       
-### 기존 탭 스크립트에 대한 제어 ###  
+### Legacy Code ###
+**기존 탭 스크립트에 대한 제어**    
 `m.js` : modules.min.js  
 `b.js` : 기존의 탭 제어 스크립트가 포함된 스크립트 파일  
   
