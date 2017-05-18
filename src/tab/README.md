@@ -1,10 +1,10 @@
 # Tab  [![dependencies Status](https://david-dm.org/boennemann/badges/status.svg)](https://david-dm.org/boennemann/badges) [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 
 
-### Description ###
+### Description###
 jQuery 기반 탭 플러그인 입니다.  
 
-### Denpendencies ###
+### Denpendencies###
 * jQuery 1.7.1 over
   
 ### Features ###
@@ -122,7 +122,7 @@ ex: ['#player_1', '#player_2']
 ```
       
 ### Legacy Code ###
-**기존 탭 스크립트에 대한 제어**    
+**기존 탭 스크립트에 대한 제어**      
 `m.js` : modules.min.js  
 `b.js` : 기존의 탭 제어 스크립트가 포함된 스크립트 파일  
   
