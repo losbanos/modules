@@ -464,7 +464,7 @@ $.emitScroll();
             contents: "",
             eventType: "click",
             activeClassName: "on",
-            oldTabPrefix: "js-tab-type",
+            oldTabPrefix: [ "js-tab-type", "js-tab" ],
             sliders: [ ".bxslider-lazy" ],
             players: "",
             onChange: null,
@@ -489,6 +489,9 @@ $.emitScroll();
                         $.preventActions(ev);
                         c.show($(this));
                     });
+                    if (options.onRollOver && typeof options.onRollOver === "function") {
+                        console.log(typeof options.onRollOver === "function");
+                    }
                     $owner.trigger("init");
                     if (c.checkCallBack(options.onInit)) options.onInit.call($owner, c);
                 },
@@ -530,16 +533,22 @@ $.emitScroll();
                 disableOldTab: function() {
                     var prefix = options.oldTabPrefix;
                     if (prefix && prefix.length) {
-                        var ot = $('ul[class*="' + prefix + '"]');
-                        if (ot.length) {
-                            ot.find("a").off("click");
-                        }
+                        $.each(prefix, function() {
+                            var ot = $('ul[class*="' + this + '"]');
+                            if (ot.length) {
+                                ot.find("a").off("click");
+                            }
+                        });
                     }
                     $win.on("old-tab", function() {
-                        var ot = $("ul[class*='" + prefix + "']");
-                        if (ot.length) {
-                            ot.find("a").off("click");
-                        }
+                        var prefix = Array.prototype.slice.call(arguments);
+                        prefix = prefix.slice(1);
+                        $.each(prefix, function() {
+                            var ot = $("ul[class*='" + this + "']");
+                            if (ot.length) {
+                                ot.find("a").off("click");
+                            }
+                        });
                     });
                 },
                 setPlayers: function() {
@@ -581,7 +590,8 @@ $.emitScroll();
                         });
                     }
                     $owner.trigger("onChange");
-                    $win.trigger("scroll");
+                    // $win.trigger('scroll');
+                    c.handleLegacy();
                     $.emitScroll();
                     if (c.checkCallBack(options.onChange)) options.onChange.call(c.$cur, c);
                 },
@@ -607,6 +617,11 @@ $.emitScroll();
                 },
                 checkCallBack: function(callback) {
                     return $.type(callback) === "function" && callback;
+                },
+                handleLegacy: function() {
+                    if (__globalBxslider && __globalBxslider.bxList.length) {
+                        __globalBxslider.resize();
+                    }
                 }
             };
             c.init();
