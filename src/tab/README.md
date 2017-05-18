@@ -85,7 +85,7 @@ $('#tab_buttons').tab({
  **default**  
 기본으로 활성화시킬 탭 인덱스 , 1부터 시작.  
 ```json
-default: 1  
+base: 1  
 type: integer
 ```  
   
@@ -108,7 +108,7 @@ type: String
 탭 변경시 제어해야하는 슬라이드 선택자들  
 활성화된 탭컨텐츠안에서 해당 슬라이드를 검색하여 리로딩합니다.  
 ```json
-default: ['.bxslider']
+default: ['.bxslider-lazy']
 type: Array or String
 ```
     
@@ -122,14 +122,41 @@ ex: ['#player_1', '#player_2']
 ```
       
 ### 기존 탭 스크립트에 대한 제어 ###  
-**js-tab-type 으로 시작되는 클래스 명을 가진 탭 컨텐츠**  
+`m.js` : modules.min.js  
+`b.js` : 기존의 탭 제어 스크립트가 포함된 스크립트 파일  
   
-  modules.js 스크립트 파일을 로드 및 tab 메서드에 대한 호출이 기존 탭스크립트보다 늦으면 자동적으로 `.js-tab-type[1~5]` 에서 a 태그에 바인딩된 클릭 이벤트는 해제됩니다.  
-  기존 탭 스크립트가 tab 메서드 호출보다 늦게 실행될 경우 기존 스크립트 파일에 다음을 추가해준다  
+**m.js 가 b.js 보다 늦게 선언/호출된 경우**
   ```js
+$(selector).tab({triggers: 'li'});
+```  
+    
+
+tab 함수를 호출하면 기본적으로 현재 선택자의 탭 버튼 a 에 걸린 클릭 이벤트가 해제됩니다.  
+기존 탭 버튼의 대부분이 a 태그에 클릭이 걸려 있다는 전제하에 내부적으로 처리되어 있습니다   
+기존 탭 버튼이 a 태그가 아닌 태그에 클릭이 걸려있을 경우  
+oldTabPrefix 옵션을 추가해주어야 합니다.
+```json
+oldTabPrefix : Array
+```
+```js
+//Usage
+$(selector).tab({triggers: 'li', oldTabPrefix: ['.js-other-tab', '.js-other-tab2']});
+```
+
+
+**m.js 가 b.js 보다 먼저 선언/호출된 경우**  
+<br />
+b.js 파일 안에  
+기존 탭을 제어하는 코드 아래쪽에 다음의 코드를 추가합니다.  
+```js
 $(window).trigger('old-tab');
 ```
-해당 이벤트를 업데이트 된 tab에서 받아서 기존 탭의 스크립트를 해제합니다.
+  
+a 태그가 아닌 다른 태그에 클릭 이벤트가 걸려있을 경우  
+```js
+$(window).trigger('old-tab', ['.js-other-tab']);
+```  
+  
 
 
   
