@@ -464,7 +464,7 @@ $.emitScroll();
             contents: "",
             eventType: "click",
             activeClassName: "on",
-            oldTabPrefix: [ "js-tab-type", "js-tab" ],
+            oldTabPrefix: [ ".js-tab-type", ".js-tab" ],
             sliders: [ ".bxslider-lazy" ],
             players: "",
             onChange: null,
@@ -534,7 +534,7 @@ $.emitScroll();
                     var prefix = options.oldTabPrefix;
                     if (prefix && prefix.length) {
                         $.each(prefix, function() {
-                            var ot = $('ul[class*="' + this + '"]');
+                            var ot = $(this);
                             if (ot.length) {
                                 ot.find("a").off("click");
                             }
@@ -544,7 +544,7 @@ $.emitScroll();
                         var prefix = Array.prototype.slice.call(arguments);
                         prefix = prefix.slice(1);
                         $.each(prefix, function() {
-                            var ot = $("ul[class*='" + this + "']");
+                            var ot = $(this);
                             if (ot.length) {
                                 ot.find("a").off("click");
                             }
@@ -590,7 +590,7 @@ $.emitScroll();
                         });
                     }
                     $owner.trigger("onChange");
-                    // $win.trigger('scroll');
+                    $win.trigger("scroll");
                     c.handleLegacy();
                     $.emitScroll();
                     if (c.checkCallBack(options.onChange)) options.onChange.call(c.$cur, c);

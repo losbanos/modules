@@ -2,7 +2,7 @@
  * Created by Hackers Publish Team on 2017-05-08.
  */
 ;(function ($, win) {
-	'use strict'
+	'use strict';
 	var $win = $(win);
 	$.fn.tab = function (settings) {
 		var options = $.extend(true, {
@@ -11,7 +11,7 @@
 			contents: '',
 			eventType: 'click',
 			activeClassName: 'on',
-			oldTabPrefix: ['js-tab-type', 'js-tab'],
+			oldTabPrefix: ['.js-tab-type', '.js-tab'],
 			sliders: ['.bxslider-lazy'],
 			players: '',
 			onChange: null,
@@ -93,7 +93,7 @@
 					var prefix = options.oldTabPrefix;
 					if(prefix && prefix.length) {
 						$.each( prefix, function () {
-							var ot = $('ul[class*="'+ this +'"]');
+							var ot = $(this);
 							if(ot.length) {
 								ot.find('a').off('click');
 							}
@@ -103,7 +103,7 @@
 						var prefix = Array.prototype.slice.call(arguments);
 						prefix = prefix.slice(1);
 						$.each(prefix, function () {
-							var ot = $("ul[class*='"+ this +"']");
+							var ot = $(this);
 							if(ot.length) {
 								ot.find('a').off('click');
 							}
@@ -154,7 +154,8 @@
 					}
 
 					$owner.trigger('onChange');
-					// $win.trigger('scroll');
+					$win.trigger('scroll');
+
 					c.handleLegacy();
 					$.emitScroll();
 
