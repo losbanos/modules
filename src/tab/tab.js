@@ -11,7 +11,7 @@
 			contents: '',
 			eventType: 'click',
 			activeClassName: 'on',
-			oldTabPrefix: ['.js-tab-type', '.js-tab'],
+			oldTabPrefix: '',
 			sliders: ['.bxslider-lazy'],
 			players: '',
 			onChange: null,
@@ -90,26 +90,21 @@
 
 				},
 				disableOldTab: function () {
+					$owner.find('a').off('click');
 					var prefix = options.oldTabPrefix;
-					if(prefix && prefix.length) {
-						$.each( prefix, function () {
-							var ot = $(this);
-							if(ot.length) {
-								ot.find('a').off('click');
-							}
-						})
+					if($.type(prefix) === 'array' && prefix.length) {
+						prefix = prefix.join(',');
+						$owner.find(prefix).off('click');
 					}
+
 					$win.on('old-tab', function () {
-						var prefix = Array.prototype.slice.call(arguments);
-						prefix = prefix.slice(1);
-						$.each(prefix, function () {
-							var ot = $(this);
-							if(ot.length) {
-								ot.find('a').off('click');
-							}
-						})
+						$owner.find('a').off('click');
+						var extra = Array.prototype.slice.call(arguments);
+						extra = extra.slice(1).join(',');
+						if(extra.length) {$owner.find(extra).off('click');}
 					});
 				},
+
 				setPlayers: function () {
 					if(options.players.length) {
 						$.waitJwplayer(function () {
@@ -186,6 +181,7 @@
 					return $.type(callback) === 'function' && callback;
 				},
 				handleLegacy: function () {
+
 					if(__globalBxslider && __globalBxslider.bxList.length) {
 						__globalBxslider.resize()
 					}
