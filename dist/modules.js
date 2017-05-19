@@ -531,18 +531,18 @@ $.emitScroll();
                     this.$activeClassTarget = $owner.find(activeClassTarget);
                 },
                 disableOldTab: function() {
-                    $owner.find("a").off("click");
+                    $owner.find("a").off("click mouseenter");
                     var prefix = options.oldTabPrefix;
                     if ($.type(prefix) === "array" && prefix.length) {
                         prefix = prefix.join(",");
-                        $owner.find(prefix).off("click");
+                        $owner.find(prefix).off("click mouseenter");
                     }
                     $win.on("old-tab", function() {
-                        $owner.find("a").off("click");
+                        $owner.find("a").off("click mouseenter");
                         var extra = Array.prototype.slice.call(arguments);
                         extra = extra.slice(1).join(",");
                         if (extra.length) {
-                            $owner.find(extra).off("click");
+                            $owner.find(extra).off("click mouseenter");
                         }
                     });
                 },
