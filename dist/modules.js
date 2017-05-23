@@ -444,7 +444,7 @@ $.emitScroll();
         return this.each(function() {
             var $this = $(this);
             if (!options.forceSize) {
-                $this.height(options.minHeight).css("display", "block");
+                $this.height(options.minHeight).css("display", "inline-block");
             }
             $this.lazyload(options).load(function() {
                 $this.removeAttr("style data-original");
