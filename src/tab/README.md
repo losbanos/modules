@@ -148,7 +148,8 @@ $(selector).tab({triggers: 'li', oldTabPrefix: ['.js-other-tab', '.js-other-tab2
 **m.js 가 b.js 보다 먼저 선언/호출된 경우**  
 <br />
 b.js 파일 안에  
-기존 탭을 제어하는 코드 아래쪽에 다음의 코드를 추가합니다.  
+기존 탭을 제어하는 코드 아래쪽에 다음의 코드를 추가합니다.
+  
 ```js
 $(window).trigger('old-tab');
 ```
@@ -156,7 +157,77 @@ $(window).trigger('old-tab');
 a 태그가 아닌 다른 태그에 클릭 이벤트가 걸려있을 경우  
 ```js
 $(window).trigger('old-tab', ['.js-other-tab']);
+```    
+  
+### Handlers ###
+**onChange**  
+  
+탭 컨텐츠가 변경된 다음 호출됩니다.  
+  ```js
+  onChange: function(parameter){}
+```
+  
+* context(this): 현재 활성화된 탭 컨텐츠.  
+* parameter: 탭 컨트롤 객체.
+
+**Usage**  
+```js
+$('.js-tab-type1').tab({
+    triggers: 'li', 
+    onChange: function (c) {
+    	console.log(this); // output : 현재 탭 컨텐츠
+    	console.log(c); // output : tab control object
+    }
+});
 ```  
+**onRollOver**  
+  ```js
+onRollOver: function(parameter) {};
+```
+  
+  * this: 현재 마우스 오버된 trigger
+  * parameter : 탭 컨트롤 객체.  
+   
+```js
+$('.js-tab-type1').tab({
+    triggers: 'li',
+    onRollOver: function (c) {
+    	console.log(this); // 현재 마우스 오버된 dom 객체
+    	console.log(c.$triggers); // li 제이쿼리 객체
+    },
+    onChange: function (c) {
+    	console.log(this); // output : 현재 탭 컨텐츠
+    	console.log(c); // output : tab control object
+    }
+});
+```  
+
+### Control Object ###
+  **description**    
+    
+  대부분 컨트롤 객체는 **onChannge, onRollOver, onInit** 등의 핸들러를 통해 바인딩되며,  
+  콜백 함수의 파라미터를 통해 참조할 수 있다.  
+    
+  **$triggers**    
+    `tab trigger 객체들에 대한 참조(jQuery)`
+    
+  **$contents**    
+    `tab contents 에 대한 참조 (jQuery)`
+  
+  ```js
+  $('.js-tab-type1').tab({
+      triggers: 'li',
+      onInit: function () {console.log()},
+      onRollOver: function (c) {
+      	console.log(c.$triggers); // li 제이쿼리 객체
+      },
+      onChange: function (c) {
+      	console.log(c.$contents); // 탭 컨텐츠들.
+      }
+  });
+  ```
+  
+  
   
 
 

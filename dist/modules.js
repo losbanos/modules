@@ -442,12 +442,14 @@ $.emitScroll();
             forceSize: false
         }, settings || {});
         return this.each(function() {
-            var $this = $(this);
+            var $this = $(this).css("visibility", "hidden");
             if (!options.forceSize) {
-                $this.height(options.minHeight).css("display", "inline-block");
+                $this.height(options.minHeight).css({
+                    display: "inline-block"
+                });
             }
             $this.lazyload(options).load(function() {
-                $this.removeAttr("style data-original");
+                $this.removeAttr("style data-original").css("visibility", "visible");
             });
         });
     };
@@ -489,8 +491,11 @@ $.emitScroll();
                         $.preventActions(ev);
                         c.show($(this));
                     });
-                    if (options.onRollOver && typeof options.onRollOver === "function") {
-                        console.log(typeof options.onRollOver === "function");
+                    if (c.checkCallBack(options.onRollOver)) {
+                        $owner.on("mouseenter", options.triggers, function(ev) {
+                            $.preventActions(ev);
+                            options.onRollOver.call(this, c);
+                        });
                     }
                     $owner.trigger("init");
                     if (c.checkCallBack(options.onInit)) options.onInit.call($owner, c);
@@ -530,6 +535,7 @@ $.emitScroll();
                     if ($.type(activeClassTarget) === "array" && activeClassTarget.length) activeClassTarget = activeClassTarget.join(","); else activeClassTarget = options.triggers;
                     this.$activeClassTarget = $owner.find(activeClassTarget);
                 },
+                setBase: function(num) {},
                 disableOldTab: function() {
                     $owner.find("a").off("click mouseenter");
                     var prefix = options.oldTabPrefix;

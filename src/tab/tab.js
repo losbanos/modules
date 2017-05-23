@@ -37,9 +37,13 @@
 						c.show($(this));
 					});
 
-					if(options.onRollOver && typeof options.onRollOver === 'function') {
-						console.log(typeof options.onRollOver === 'function');
+					if(c.checkCallBack(options.onRollOver)) {
+						$owner.on('mouseenter', options.triggers, function (ev) {
+							$.preventActions(ev);
+							options.onRollOver.call(this, c);
+						})
 					}
+
 					$owner.trigger('init');
 					if(c.checkCallBack(options.onInit)) options.onInit.call($owner,c);
 
@@ -86,6 +90,9 @@
 					else activeClassTarget = options.triggers;
 
 					this.$activeClassTarget = $owner.find(activeClassTarget);
+
+				},
+				setBase: function (num) {
 
 				},
 				disableOldTab: function () {
