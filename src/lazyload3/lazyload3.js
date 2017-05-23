@@ -56,11 +56,14 @@
 		}, settings || {});
 
 		return this.each(function () {
-			var $this = $(this);
-			if(!options.forceSize) {$this.height(options.minHeight).css('display', 'inline-block')}
+			var $this = $(this).css('visibility', 'hidden');
+			if(!options.forceSize) {
+				$this.height(options.minHeight).css({display:'inline-block'});
+			}
 
 			$this.lazyload(options).load(function () {
-				$this.removeAttr('style data-original');
+				$this.removeAttr('style data-original')
+				.css('visibility', 'visible');
 			});
 		})
 	}
