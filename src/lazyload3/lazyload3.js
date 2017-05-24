@@ -57,7 +57,8 @@
 
 		return this.each(function () {
 			var $this = $(this).css('visibility', 'hidden');
-			if(!options.forceSize) {
+
+			if(!$this.attr('width')|| $this.attr('width') === void 0) {
 				$this.height(options.minHeight).css({display:'inline-block'});
 			}
 

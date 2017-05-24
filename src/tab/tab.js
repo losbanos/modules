@@ -44,6 +44,13 @@
 						})
 					}
 
+					if(c.checkCallBack(options.onRollOut)) {
+						$owner.on('mouseleave', options.triggers, function (ev) {
+							$.preventActions(ev);
+							options.onRollOut.call(this, c);
+						})
+					}
+
 					$owner.trigger('init');
 					if(c.checkCallBack(options.onInit)) options.onInit.call($owner,c);
 
