@@ -14,17 +14,12 @@ Common JS Libraries for Hackers Publish Team
 
 ### Features ###
 **Dev**  
-* [Common](http://222.122.229.21/guide/modules/tree/master/src/common) :    전역,공통 메서드
-* [jQuery-floating](http://222.122.229.21/guide/modules/tree/master/src/jquery-floating) : 제이쿼리 기반 플로팅배너 (추가예정)
-* [jQuery-Tab](http://222.122.229.21/guide/modules/tree/master/src/tab)    : 제이쿼리 기반 탭 플러그인 (추가예정)  
-* [SetBxSlider](http://222.122.229.21/guide/modules/tree/master/src/bxlazy)     : bx 슬라이더 업데이트 및 탭 연동
-* [lazyload3](http://222.122.229.21/guide/modules/tree/master/src/lazyload3) : 스크률 및 뷰포트 인지에 따른 이미지 순차로드. 
-* [modules](http://222.122.229.21/guide/modules/blob/master/dist/modules.js): 통합 js 파일
+* [Common](https://github.com/losbanos/modules/tree/master/src) :    전역,공통 메서드
+* [jQuery-Tab](https://github.com/losbanos/modules/tree/master/src/tab)    : 제이쿼리 기반 탭 플러그인 (추가 업데이트 필요)  
+* [SetBxSlider](https://github.com/losbanos/modules/tree/master/src/bxlazy)     : bx 슬라이더 업데이트 및 탭 연동
+* [lazyload3](https://github.com/losbanos/modules/tree/master/src/lazyload3) : 스크률 및 뷰포트 인지에 따른 이미지 순차로드. 
+* [jQuery-floating](https://github.com/losbanos/modules/blob/master/src/jquery-floating/jquery-floating.js) : 제이쿼리 기반 플로팅배너 (차후 추가 업데이트 예정)
+* [modules](https://github.com/losbanos/modules/blob/master/dist/modules.min.js): 통합 js 파일
 
 ### Installation ###
 [Download Node](https://nodejs.org/ko/)  
-
-### Who do I talk to? ###
-일단 메서드 네임은 좀 거지같으니 이따가 바꿀께연.  
-* Repo owner or admin
-* Other community or team contact

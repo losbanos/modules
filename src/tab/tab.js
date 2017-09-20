@@ -36,7 +36,7 @@
 						$.preventActions(ev);
 						c.show($(this));
 					});
-
+					
 					if(c.checkCallBack(options.onRollOver)) {
 						$owner.on('mouseenter', options.triggers, function (ev) {
 							$.preventActions(ev);
